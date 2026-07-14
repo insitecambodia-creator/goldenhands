@@ -211,6 +211,31 @@ section { padding: 90px 0; position: relative; }
 .map-frame { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
 .map-frame iframe { width: 100%; height: 420px; border: 0; display: block; }
 
+/* ===== Booking ===== */
+#booking { background: var(--cream); }
+.booking-grid { max-width: 720px; }
+.booking-form {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 36px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 18px;
+}
+.booking-form label { display: flex; flex-direction: column; gap: 7px; font-size: .88rem; color: var(--ink); }
+.booking-form .opt { color: var(--ink-soft); font-weight: 300; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.booking-form input, .booking-form select, .booking-form textarea {
+  font-family: var(--font-body); font-size: .95rem; padding: 12px 14px;
+  border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--ink);
+  resize: vertical;
+}
+.booking-form input:focus, .booking-form select:focus, .booking-form textarea:focus {
+  outline: none; border-color: var(--gold-deep); box-shadow: 0 0 0 3px rgba(201,151,31,.15);
+}
+.booking-form button { align-self: flex-start; }
+.form-status { font-size: .88rem; font-weight: 500; min-height: 1.3em; margin: 0; }
+.form-status.success { color: #2f7a4a; }
+.form-status.error { color: #b3432b; }
+.form-status.pending { color: var(--ink-soft); }
+
 /* ===== Footer ===== */
 footer { background: var(--ink); color: rgba(244,238,224,.75); padding: 56px 0 30px; text-align: center; }
 .fbrand { font-family: var(--font-head); font-size: 1.2rem; color: #fff; margin-bottom: .5em; }
@@ -249,4 +274,6 @@ footer { background: var(--ink); color: rgba(244,238,224,.75); padding: 56px 0 3
   section { padding: 64px 0; }
   .team-grid, .why-grid, .combo-grid, .team-photos { grid-template-columns: 1fr; }
   .hero { min-height: 82vh; }
+  .form-row { grid-template-columns: 1fr; }
+  .booking-form { padding: 26px; }
 }

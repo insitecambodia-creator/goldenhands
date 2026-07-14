@@ -1,5 +1,10 @@
 // Golden Hands Massage & Spa — Kampot
 
+// Paste your n8n Webhook URL here (Webhook node -> Production URL).
+// Until this is set, the booking form will show a friendly message
+// instead of trying to send anywhere.
+var N8N_WEBHOOK_URL = 'REPLACE_WITH_YOUR_N8N_WEBHOOK_URL';
+
 document.addEventListener('DOMContentLoaded', function () {
   // Mobile nav toggle
   var burger = document.getElementById('burger');
@@ -52,4 +57,48 @@ document.addEventListener('DOMContentLoaded', function () {
   // Footer year
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = new Date().getFullYear();
+
+  // Booking form -> n8n webhook
+  var bookingForm = document.getElementById('bookingForm');
+  var bookingStatus = document.getElementById('bookingStatus');
+  if (bookingForm && bookingStatus) {
+    bookingForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!N8N_WEBHOOK_URL || N8N_WEBHOOK_URL.indexOf('REPLACE_WITH') === 0) {
+        setStatus('error', 'Online booking isn\'t connected yet — please call or WhatsApp us at +855 12 847 747 to book.');
+        return;
+      }
+
+      var submitBtn = bookingForm.querySelector('button[type="submit"]');
+      var data = Object.fromEntries(new FormData(bookingForm).entries());
+      data.source = 'goldenhands-website';
+      data.submittedAt = new Date().toISOString();
+
+      submitBtn.disabled = true;
+      setStatus('pending', 'Sending your request…');
+
+      fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Request failed with status ' + res.status);
+          setStatus('success', 'Thank you! Your booking request has been sent — we\'ll confirm by phone or WhatsApp shortly.');
+          bookingForm.reset();
+        })
+        .catch(function () {
+          setStatus('error', 'Something went wrong sending your request. Please call or WhatsApp us at +855 12 847 747 to book directly.');
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+        });
+    });
+  }
+
+  function setStatus(kind, message) {
+    bookingStatus.textContent = message;
+    bookingStatus.className = 'form-status ' + kind;
+  }
 });
