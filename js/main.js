@@ -3,7 +3,7 @@
 // Paste your n8n Webhook URL here (Webhook node -> Production URL).
 // Until this is set, the booking form will show a friendly message
 // instead of trying to send anywhere.
-var N8N_WEBHOOK_URL = 'REPLACE_WITH_YOUR_N8N_WEBHOOK_URL';
+var N8N_WEBHOOK_URL = 'https://n8n.srv873866.hstgr.cloud/webhook/21e3ebeb-3ec7-41d2-814e-a03a1d2a4f2a';
 
 document.addEventListener('DOMContentLoaded', function () {
   // Mobile nav toggle
