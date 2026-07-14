@@ -1,33 +1,55 @@
-// Golden Hands Massage — Kampot
+// Golden Hands Massage & Spa — Kampot
 
 document.addEventListener('DOMContentLoaded', function () {
-  var toggle = document.getElementById('navToggle');
-  var nav = document.getElementById('primaryNav');
-
-  if (toggle && nav) {
-    toggle.addEventListener('click', function () {
+  // Mobile nav toggle
+  var burger = document.getElementById('burger');
+  var nav = document.getElementById('siteNav');
+  if (burger && nav) {
+    burger.addEventListener('click', function () {
       var isOpen = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
-
     nav.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         nav.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
+        burger.setAttribute('aria-expanded', 'false');
       });
     });
   }
 
-  var yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  // Menu tab switching
+  var tabs = document.querySelectorAll('.menu-tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var target = tab.getAttribute('data-tab');
 
-  var form = document.getElementById('bookingForm');
-  var status = document.getElementById('formStatus');
-  if (form && status) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      status.textContent = 'Thanks! This demo form isn\'t connected yet — please message us on WhatsApp to confirm your booking.';
-      form.reset();
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+
+      document.querySelectorAll('.menu-panel').forEach(function (panel) {
+        panel.classList.toggle('active', panel.id === 'panel-' + target);
+      });
     });
+  });
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(function (el) { observer.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
   }
+
+  // Footer year
+  var yr = document.getElementById('yr');
+  if (yr) yr.textContent = new Date().getFullYear();
 });
