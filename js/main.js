@@ -58,12 +58,35 @@ document.addEventListener('DOMContentLoaded', function () {
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = new Date().getFullYear();
 
+  // Booking date: no same-day bookings, earliest selectable day is tomorrow
+  var bookingDate = document.getElementById('bookingDate');
+  var minBookingDate = null;
+  if (bookingDate) {
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    minBookingDate = formatLocalDate(tomorrow);
+    bookingDate.min = minBookingDate;
+  }
+
+  function formatLocalDate(d) {
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
+  }
+
   // Booking form -> n8n webhook
   var bookingForm = document.getElementById('bookingForm');
   var bookingStatus = document.getElementById('bookingStatus');
   if (bookingForm && bookingStatus) {
     bookingForm.addEventListener('submit', function (e) {
       e.preventDefault();
+
+      if (bookingDate && bookingDate.value && minBookingDate && bookingDate.value < minBookingDate) {
+        setStatus('error', 'We can\'t take same-day or back-dated bookings online — please choose a date from tomorrow onward, or call us at +855 12 847 747 for same-day requests.');
+        bookingDate.focus();
+        return;
+      }
 
       if (!N8N_WEBHOOK_URL || N8N_WEBHOOK_URL.indexOf('REPLACE_WITH') === 0) {
         setStatus('error', 'Online booking isn\'t connected yet — please call or WhatsApp us at +855 12 847 747 to book.');
