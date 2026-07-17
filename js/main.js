@@ -109,6 +109,16 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(function (res) {
           if (!res.ok) throw new Error('Request failed with status ' + res.status);
           setStatus('success', 'Thank you! Your booking request has been sent — we\'ll confirm by phone or WhatsApp shortly.');
+
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'booking_request',
+            booking_treatment: data.treatment,
+            booking_guests: data.guests,
+            booking_date: data.date,
+            booking_time: data.time
+          });
+
           bookingForm.reset();
         })
         .catch(function () {
