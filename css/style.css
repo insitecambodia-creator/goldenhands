@@ -216,6 +216,10 @@ section { padding: 90px 0; position: relative; }
 /* ===== Booking ===== */
 #booking { background: var(--cream); }
 .booking-grid { max-width: 720px; }
+.booking-policy {
+  margin: 1.2em auto 0; padding-top: 1em; border-top: 1px solid var(--line);
+  font-size: .82rem; color: var(--ink-soft); max-width: 560px;
+}
 .booking-form {
   background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 36px; box-shadow: var(--shadow);
