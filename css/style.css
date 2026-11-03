@@ -113,6 +113,7 @@ section { padding: 90px 0; position: relative; }
 .hero-inner { position: relative; z-index: 1; color: var(--cream); padding: 80px 24px 64px; max-width: 760px; }
 .hero-inner .eyebrow { color: var(--gold-light); }
 .hero h1 { color: #fff; font-size: clamp(2.1rem, 1.6rem + 2.4vw, 3.4rem); margin-bottom: .4em; }
+.hero-tagline { font-family: var(--font-head); font-style: italic; font-weight: 400; color: var(--gold-light); font-size: clamp(1.05rem, .95rem + .6vw, 1.3rem); margin: -.2em 0 .8em; }
 .lede { color: rgba(244, 238, 224, .85); font-size: 1.05rem; max-width: 560px; }
 .cta-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 1.6em 0 2.2em; }
 .hero .btn-ghost { border-color: rgba(244,238,224,.7); color: #fff; }
