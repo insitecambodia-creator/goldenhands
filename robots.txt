@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://goldenhands.massage-kampot.com/sitemap.xml
