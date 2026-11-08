@@ -50,6 +50,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }, { threshold: 0.15 });
 
     revealEls.forEach(function (el) { observer.observe(el); });
+
+    // Safety net: if a renderer executes JS but never scrolls (e.g. a
+    // crawler or automated screenshot tool), don't leave content hidden
+    // forever — reveal everything after a short grace period.
+    setTimeout(function () {
+      revealEls.forEach(function (el) { el.classList.add('in'); });
+    }, 2500);
   } else {
     revealEls.forEach(function (el) { el.classList.add('in'); });
   }
